@@ -23,6 +23,7 @@ interface SiteSettings {
     instagram: string;
     twitter: string;
     linkedin: string;
+    whatsapp: string;
   };
 }
 
@@ -45,6 +46,7 @@ const AdminDashboard = () => {
       instagram: '',
       twitter: '',
       linkedin: '',
+      whatsapp: '',
     },
   });
 

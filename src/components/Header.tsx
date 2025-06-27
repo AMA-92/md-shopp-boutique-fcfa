@@ -94,16 +94,16 @@ const Header = ({ cartItemsCount, onToggleCart }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Navigation avec nouveau design */}
+        {/* Navigation avec nouveau design - tous les liens pointent vers la page d'accueil */}
         <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block mt-6`}>
           <ul className="md:flex md:space-x-8 space-y-2 md:space-y-0">
             {[
               { name: 'Accueil', path: '/' },
-              { name: 'Produits', path: '/products' },
-              { name: 'Électronique', path: '/electronics' },
-              { name: 'Mode', path: '/fashion' },
-              { name: 'Maison', path: '/home' },
-              { name: 'Contact', path: '/contact' }
+              { name: 'Produits', path: '/' },
+              { name: 'Électronique', path: '/' },
+              { name: 'Mode', path: '/' },
+              { name: 'Maison', path: '/' },
+              { name: 'Contact', path: '/' }
             ].map((item) => (
               <li key={item.name}>
                 <Link 

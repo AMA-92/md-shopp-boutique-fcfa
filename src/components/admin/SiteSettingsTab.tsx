@@ -19,6 +19,7 @@ interface SiteSettings {
     instagram: string;
     twitter: string;
     linkedin: string;
+    whatsapp: string;
   };
 }
 
@@ -235,6 +236,15 @@ const SiteSettingsTab = ({ settings, onSettingsChange }: SiteSettingsTabProps) =
                 value={localSettings.socialMedia.linkedin}
                 onChange={(e) => handleSocialMediaChange('linkedin', e.target.value)}
                 placeholder="https://linkedin.com/company/mdshopp"
+              />
+            </div>
+
+            <div>
+              <Label>WhatsApp</Label>
+              <Input
+                value={localSettings.socialMedia.whatsapp}
+                onChange={(e) => handleSocialMediaChange('whatsapp', e.target.value)}
+                placeholder="https://wa.me/22177876208"
               />
             </div>
           </div>

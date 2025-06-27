@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Twitter, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Twitter, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -34,6 +34,9 @@ const Footer = () => {
               <a href="#" className="bg-gradient-to-r from-blue-700 to-blue-800 p-3 rounded-xl hover:from-blue-800 hover:to-blue-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                 <Linkedin size={20} />
               </a>
+              <a href="#" className="bg-gradient-to-r from-green-500 to-green-600 p-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <MessageCircle size={20} />
+              </a>
             </div>
           </div>
 
@@ -58,7 +61,7 @@ const Footer = () => {
             <ul className="space-y-3 text-gray-300">
               {['Électronique', 'Mode & Beauté', 'Maison & Jardin', 'Sport & Loisirs', 'Livres'].map((category) => (
                 <li key={category}>
-                  <a href="/electronics" className="hover:text-purple-300 transition-colors duration-300 relative group">
+                  <a href="/" className="hover:text-purple-300 transition-colors duration-300 relative group">
                     {category}
                     <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                   </a>
