@@ -59,7 +59,7 @@ const ProductCard = ({ product, onAddToCart, onViewProduct }: ProductCardProps) 
       </div>
 
       <div className="p-4">
-        <div className="text-sm text-green-600 font-medium mb-1">{product.category}</div>
+        <div className="text-sm text-slate-700 font-medium mb-1">{product.category}</div>
         <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2">{product.name}</h3>
         
         {/* Rating */}
@@ -89,7 +89,7 @@ const ProductCard = ({ product, onAddToCart, onViewProduct }: ProductCardProps) 
         {/* Add to cart button */}
         <button
           onClick={() => onAddToCart(product)}
-          className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
+          className="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
         >
           <ShoppingCart size={16} />
           <span>Ajouter au panier</span>

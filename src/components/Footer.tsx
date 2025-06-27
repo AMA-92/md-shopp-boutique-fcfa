@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Company info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-green-600 to-green-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
+              <div className="bg-gradient-to-r from-slate-700 to-slate-800 w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
                 MD
               </div>
               <span className="text-2xl font-bold">shopp</span>
@@ -39,11 +39,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Liens rapides</h3>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="/" className="hover:text-green-400 transition-colors">Accueil</a></li>
-              <li><a href="/products" className="hover:text-green-400 transition-colors">Produits</a></li>
-              <li><a href="/about" className="hover:text-green-400 transition-colors">À propos</a></li>
-              <li><a href="/contact" className="hover:text-green-400 transition-colors">Contact</a></li>
-              <li><a href="/faq" className="hover:text-green-400 transition-colors">FAQ</a></li>
+              <li><a href="/" className="hover:text-slate-400 transition-colors">Accueil</a></li>
+              <li><a href="/products" className="hover:text-slate-400 transition-colors">Produits</a></li>
+              <li><a href="/about" className="hover:text-slate-400 transition-colors">À propos</a></li>
+              <li><a href="/contact" className="hover:text-slate-400 transition-colors">Contact</a></li>
+              <li><a href="/faq" className="hover:text-slate-400 transition-colors">FAQ</a></li>
             </ul>
           </div>
 
@@ -51,11 +51,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Catégories</h3>
             <ul className="space-y-2 text-gray-300">
-              <li><a href="/electronics" className="hover:text-green-400 transition-colors">Électronique</a></li>
-              <li><a href="/fashion" className="hover:text-green-400 transition-colors">Mode & Beauté</a></li>
-              <li><a href="/home" className="hover:text-green-400 transition-colors">Maison & Jardin</a></li>
-              <li><a href="/sports" className="hover:text-green-400 transition-colors">Sport & Loisirs</a></li>
-              <li><a href="/books" className="hover:text-green-400 transition-colors">Livres</a></li>
+              <li><a href="/electronics" className="hover:text-slate-400 transition-colors">Électronique</a></li>
+              <li><a href="/fashion" className="hover:text-slate-400 transition-colors">Mode & Beauté</a></li>
+              <li><a href="/home" className="hover:text-slate-400 transition-colors">Maison & Jardin</a></li>
+              <li><a href="/sports" className="hover:text-slate-400 transition-colors">Sport & Loisirs</a></li>
+              <li><a href="/books" className="hover:text-slate-400 transition-colors">Livres</a></li>
             </ul>
           </div>
 
@@ -65,7 +65,7 @@ const Footer = () => {
             <div className="space-y-3 text-gray-300">
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
-                <span>+237 6XX XXX XXX</span>
+                <span>+221 77 876 20 82</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={16} />

@@ -103,7 +103,7 @@ const Index = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-green-600 text-white shadow-lg'
+                    ? 'bg-slate-700 text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
@@ -126,7 +126,7 @@ const Index = () => {
 
           {/* Call to Action */}
           <div className="text-center mt-12">
-            <button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+            <button className="bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
               Voir tous les produits
             </button>
           </div>
@@ -134,21 +134,21 @@ const Index = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="bg-gradient-to-r from-green-600 to-green-700 py-16">
+      <section className="bg-gradient-to-r from-slate-700 to-slate-800 py-16">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl font-bold text-white mb-4">
             Restez informé de nos dernières offres
           </h3>
-          <p className="text-green-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-slate-200 mb-8 max-w-2xl mx-auto">
             Inscrivez-vous à notre newsletter et recevez en exclusivité nos meilleures promotions
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
             <input
               type="email"
               placeholder="Votre adresse email"
-              className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-colors">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
               S'inscrire
             </button>
           </div>
