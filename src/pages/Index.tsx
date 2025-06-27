@@ -1,12 +1,170 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import HeroSection from '../components/HeroSection';
+import ProductCard from '../components/ProductCard';
+import Cart from '../components/Cart';
+import Footer from '../components/Footer';
+import { sampleProducts, categories, Product } from '../data/products';
+import { useToast } from '@/hooks/use-toast';
+
+interface CartItem extends Product {
+  quantity: number;
+}
 
 const Index = () => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("Tous");
+  const { toast } = useToast();
+
+  const addToCart = (product: Product) => {
+    const existingItem = cartItems.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCartItems(cartItems.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
+
+    toast({
+      title: "Produit ajouté",
+      description: `${product.name} a été ajouté à votre panier`,
+    });
+  };
+
+  const updateQuantity = (id: number, quantity: number) => {
+    setCartItems(cartItems.map(item =>
+      item.id === id ? { ...item, quantity } : item
+    ));
+  };
+
+  const removeItem = (id: number) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+    toast({
+      title: "Produit retiré",
+      description: "Le produit a été retiré de votre panier",
+    });
+  };
+
+  const handleCheckout = () => {
+    toast({
+      title: "Commande en cours",
+      description: "Redirection vers la page de paiement...",
+    });
+    // Ici vous pouvez rediriger vers une page de checkout
+    console.log("Checkout avec les articles:", cartItems);
+  };
+
+  const handleViewProduct = (product: Product) => {
+    toast({
+      title: "Détails du produit",
+      description: `Affichage des détails pour ${product.name}`,
+    });
+    // Ici vous pouvez rediriger vers une page de détails du produit
+    console.log("Voir le produit:", product);
+  };
+
+  const filteredProducts = selectedCategory === "Tous" 
+    ? sampleProducts 
+    : sampleProducts.filter(product => product.category === selectedCategory);
+
+  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Header 
+        cartItemsCount={cartItemsCount}
+        onToggleCart={() => setIsCartOpen(!isCartOpen)}
+      />
+      
+      <HeroSection />
+
+      {/* Featured Products Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Nos Produits Vedettes</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Découvrez notre sélection de produits de qualité supérieure, 
+              soigneusement choisis pour répondre à tous vos besoins.
+            </p>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-green-600 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                onViewProduct={handleViewProduct}
+              />
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-12">
+            <button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+              Voir tous les produits
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="bg-gradient-to-r from-green-600 to-green-700 py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">
+            Restez informé de nos dernières offres
+          </h3>
+          <p className="text-green-100 mb-8 max-w-2xl mx-auto">
+            Inscrivez-vous à notre newsletter et recevez en exclusivité nos meilleures promotions
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Votre adresse email"
+              className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-colors">
+              S'inscrire
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+
+      <Cart
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+        onCheckout={handleCheckout}
+      />
     </div>
   );
 };
