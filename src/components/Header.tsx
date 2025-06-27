@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, ShoppingCart, Menu, X, Phone, Mail } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, Phone, Mail, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface HeaderProps {
@@ -26,8 +26,15 @@ const Header = ({ cartItemsCount, onToggleCart }: HeaderProps) => {
               <span>contact@mdshopp.cm</span>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-4">
             <span>Livraison gratuite à partir de 50,000 FCFA</span>
+            <Link 
+              to="/admin/login" 
+              className="flex items-center space-x-1 hover:text-blue-200 transition-colors"
+            >
+              <Settings size={14} />
+              <span>Admin</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -89,6 +96,11 @@ const Header = ({ cartItemsCount, onToggleCart }: HeaderProps) => {
             <li><Link to="/fashion" className="block py-2 text-gray-700 hover:text-slate-700 transition-colors">Mode</Link></li>
             <li><Link to="/home" className="block py-2 text-gray-700 hover:text-slate-700 transition-colors">Maison</Link></li>
             <li><Link to="/contact" className="block py-2 text-gray-700 hover:text-slate-700 transition-colors">Contact</Link></li>
+            <li className="md:hidden">
+              <Link to="/admin/login" className="block py-2 text-gray-700 hover:text-slate-700 transition-colors">
+                Administration
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
