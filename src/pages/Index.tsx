@@ -1,9 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import ProductCard from '../components/ProductCard';
 import Cart from '../components/Cart';
+import Checkout from '../components/Checkout';
 import Footer from '../components/Footer';
 import { sampleProducts, categories, Product } from '../data/products';
 import { useToast } from '@/hooks/use-toast';
@@ -12,9 +13,32 @@ interface CartItem extends Product {
   quantity: number;
 }
 
+interface OrderItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  id: number;
+  items: OrderItem[];
+  total: number;
+  customer: {
+    name: string;
+    email: string;
+    address: string;
+  };
+  paymentMethod: 'wave' | 'orange';
+  phoneNumber: string;
+  status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+  date: string;
+}
+
 const Index = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Tous");
   const { toast } = useToast();
 
@@ -52,12 +76,19 @@ const Index = () => {
   };
 
   const handleCheckout = () => {
-    toast({
-      title: "Commande en cours",
-      description: "Redirection vers la page de paiement...",
-    });
-    // Ici vous pouvez rediriger vers une page de checkout
-    console.log("Checkout avec les articles:", cartItems);
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleOrderComplete = (order: Order) => {
+    // Sauvegarder la commande dans le localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('md-shopp-orders') || '[]');
+    const updatedOrders = [...existingOrders, order];
+    localStorage.setItem('md-shopp-orders', JSON.stringify(updatedOrders));
+    
+    // Vider le panier
+    setCartItems([]);
+    setIsCheckoutOpen(false);
   };
 
   const handleViewProduct = (product: Product) => {
@@ -65,7 +96,6 @@ const Index = () => {
       title: "Détails du produit",
       description: `Affichage des détails pour ${product.name}`,
     });
-    // Ici vous pouvez rediriger vers une page de détails du produit
     console.log("Voir le produit:", product);
   };
 
@@ -164,6 +194,18 @@ const Index = () => {
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeItem}
         onCheckout={handleCheckout}
+      />
+
+      <Checkout
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        items={cartItems.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity
+        }))}
+        onOrderComplete={handleOrderComplete}
       />
     </div>
   );

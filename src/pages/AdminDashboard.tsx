@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Product, sampleProducts, categories as initialCategories } from '../data/products';
-import { LogOut, Package, Settings, Palette } from 'lucide-react';
+import { LogOut, Package, Settings, ShoppingBag } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductsTab from '../components/admin/ProductsTab';
 import SiteSettingsTab from '../components/admin/SiteSettingsTab';
+import OrdersTab from '../components/admin/OrdersTab';
 
 interface SiteSettings {
   logo: string;
@@ -27,12 +28,35 @@ interface SiteSettings {
   };
 }
 
+interface OrderItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface Order {
+  id: number;
+  items: OrderItem[];
+  total: number;
+  customer: {
+    name: string;
+    email: string;
+    address: string;
+  };
+  paymentMethod: 'wave' | 'orange';
+  phoneNumber: string;
+  status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+  date: string;
+}
+
 const AdminDashboard = () => {
   const { isAdminLoggedIn, logout } = useAdmin();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>(sampleProducts);
   const [categories, setCategories] = useState<string[]>(initialCategories);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [siteSettings, setSiteSettings] = useState<SiteSettings>({
     logo: '',
     siteName: 'MD shopp',
@@ -56,6 +80,14 @@ const AdminDashboard = () => {
     }
   }, [isAdminLoggedIn, navigate]);
 
+  // Récupérer les commandes depuis le localStorage
+  useEffect(() => {
+    const savedOrders = localStorage.getItem('md-shopp-orders');
+    if (savedOrders) {
+      setOrders(JSON.parse(savedOrders));
+    }
+  }, []);
+
   const handleLogout = () => {
     logout();
     toast({
@@ -75,6 +107,14 @@ const AdminDashboard = () => {
     if (JSON.stringify(newSettings.categories) !== JSON.stringify(categories.slice(1))) {
       setCategories(['Tous', ...newSettings.categories]);
     }
+  };
+
+  const handleUpdateOrderStatus = (orderId: number, status: Order['status']) => {
+    const updatedOrders = orders.map(order =>
+      order.id === orderId ? { ...order, status } : order
+    );
+    setOrders(updatedOrders);
+    localStorage.setItem('md-shopp-orders', JSON.stringify(updatedOrders));
   };
 
   if (!isAdminLoggedIn) {
@@ -112,8 +152,15 @@ const AdminDashboard = () => {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:grid-cols-2 bg-white shadow-lg rounded-xl border border-purple-200">
+        <Tabs defaultValue="orders" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3 bg-white shadow-lg rounded-xl border border-purple-200">
+            <TabsTrigger 
+              value="orders" 
+              className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white rounded-lg"
+            >
+              <ShoppingBag size={18} />
+              <span>Commandes</span>
+            </TabsTrigger>
             <TabsTrigger 
               value="products" 
               className="flex items-center space-x-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white rounded-lg"
@@ -129,6 +176,15 @@ const AdminDashboard = () => {
               <span>Paramètres</span>
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="orders" className="mt-6">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-100">
+              <OrdersTab
+                orders={orders}
+                onUpdateOrderStatus={handleUpdateOrderStatus}
+              />
+            </div>
+          </TabsContent>
 
           <TabsContent value="products" className="mt-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border border-purple-100">
