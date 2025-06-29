@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Eye, Phone, Mail, MapPin, Package, Clock, CheckCircle, X } from 'lucide-react';
+import { Eye, Phone, Mail, MapPin, Package, Clock, CheckCircle, X, Truck } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface OrderItem {
@@ -23,7 +22,7 @@ interface Order {
     email: string;
     address: string;
   };
-  paymentMethod: 'wave' | 'orange';
+  paymentMethod: 'wave' | 'orange' | 'cash_on_delivery';
   phoneNumber: string;
   status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
   date: string;
@@ -115,8 +114,17 @@ const OrdersTab = ({ orders, onUpdateOrderStatus }: OrdersTabProps) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-2">
-                      <Phone size={16} className={order.paymentMethod === 'wave' ? 'text-blue-600' : 'text-orange-600'} />
-                      <span className="capitalize">{order.paymentMethod}</span>
+                      {order.paymentMethod === 'cash_on_delivery' ? (
+                        <>
+                          <Truck size={16} className="text-green-600" />
+                          <span>Paiement à la livraison</span>
+                        </>
+                      ) : (
+                        <>
+                          <Phone size={16} className={order.paymentMethod === 'wave' ? 'text-blue-600' : 'text-orange-600'} />
+                          <span className="capitalize">{order.paymentMethod}</span>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                   <TableCell className="font-semibold text-green-600">
@@ -177,7 +185,11 @@ const OrdersTab = ({ orders, onUpdateOrderStatus }: OrdersTabProps) => {
                                     </div>
                                     <div className="flex items-center space-x-2">
                                       <span className="font-medium">Paiement:</span>
-                                      <span className="capitalize">{selectedOrder.paymentMethod}</span>
+                                      {selectedOrder.paymentMethod === 'cash_on_delivery' ? (
+                                        <span>Paiement à la livraison</span>
+                                      ) : (
+                                        <span className="capitalize">{selectedOrder.paymentMethod}</span>
+                                      )}
                                     </div>
                                     <div className="flex items-center space-x-2">
                                       <span className="font-medium">Statut:</span>

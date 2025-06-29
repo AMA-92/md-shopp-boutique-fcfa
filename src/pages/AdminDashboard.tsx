@@ -44,7 +44,7 @@ interface Order {
     email: string;
     address: string;
   };
-  paymentMethod: 'wave' | 'orange';
+  paymentMethod: 'wave' | 'orange' | 'cash_on_delivery';
   phoneNumber: string;
   status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
   date: string;

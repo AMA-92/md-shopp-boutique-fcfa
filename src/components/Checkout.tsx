@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, CreditCard, Phone, CheckCircle } from 'lucide-react';
+import { X, CreditCard, Phone, CheckCircle, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +21,7 @@ interface CheckoutProps {
 }
 
 const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) => {
-  const [paymentMethod, setPaymentMethod] = useState<'wave' | 'orange'>('wave');
+  const [paymentMethod, setPaymentMethod] = useState<'wave' | 'orange' | 'cash_on_delivery'>('wave');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -38,7 +38,7 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
   const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handlePayment = async () => {
-    if (!phoneNumber || !customerInfo.name || !customerInfo.address) {
+    if (!customerInfo.name || !customerInfo.address) {
       toast({
         title: "Informations manquantes",
         description: "Veuillez remplir tous les champs obligatoires",
@@ -47,9 +47,19 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
       return;
     }
 
+    // Vérifier le numéro de téléphone pour les paiements mobiles
+    if ((paymentMethod === 'wave' || paymentMethod === 'orange') && !phoneNumber) {
+      toast({
+        title: "Numéro de téléphone requis",
+        description: "Veuillez saisir votre numéro de téléphone pour le paiement mobile",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsProcessing(true);
 
-    // Simulation du processus de paiement
+    // Simulation du processus de commande
     setTimeout(() => {
       const order = {
         id: Date.now(),
@@ -57,7 +67,7 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
         total,
         customer: customerInfo,
         paymentMethod,
-        phoneNumber,
+        phoneNumber: paymentMethod === 'cash_on_delivery' ? customerInfo.name : phoneNumber,
         status: 'pending',
         date: new Date().toISOString(),
       };
@@ -65,10 +75,17 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
       onOrderComplete(order);
       setIsProcessing(false);
       
-      toast({
-        title: "Commande créée",
-        description: `Votre commande a été créée. Vous recevrez un SMS sur le ${phoneNumber} pour confirmer le paiement ${paymentMethod.toUpperCase()}.`,
-      });
+      if (paymentMethod === 'cash_on_delivery') {
+        toast({
+          title: "Commande créée",
+          description: "Votre commande a été créée. Vous paierez à la livraison.",
+        });
+      } else {
+        toast({
+          title: "Commande créée",
+          description: `Votre commande a été créée. Vous recevrez un SMS sur le ${phoneNumber} pour confirmer le paiement ${paymentMethod.toUpperCase()}.`,
+        });
+      }
 
       onClose();
     }, 2000);
@@ -148,7 +165,7 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
             {/* Méthode de paiement */}
             <div className="space-y-4">
               <h3 className="font-semibold">Méthode de paiement</h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <button
                   onClick={() => setPaymentMethod('wave')}
                   className={`p-4 border-2 rounded-lg flex items-center space-x-3 transition-all ${
@@ -175,20 +192,51 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
                   </div>
                   <span className="font-medium">Orange Money</span>
                 </button>
+                <button
+                  onClick={() => setPaymentMethod('cash_on_delivery')}
+                  className={`p-4 border-2 rounded-lg flex items-center space-x-3 transition-all ${
+                    paymentMethod === 'cash_on_delivery'
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                    <Truck size={16} className="text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-medium text-sm">Paiement</div>
+                    <div className="text-xs text-gray-600">à la livraison</div>
+                  </div>
+                </button>
               </div>
 
-              <div>
-                <Label htmlFor="phone">Numéro de téléphone *</Label>
-                <Input
-                  id="phone"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder="+221 77 876 20 82"
-                />
-                <p className="text-sm text-gray-600 mt-1">
-                  Vous recevrez un SMS pour confirmer le paiement {paymentMethod.toUpperCase()}
-                </p>
-              </div>
+              {(paymentMethod === 'wave' || paymentMethod === 'orange') && (
+                <div>
+                  <Label htmlFor="phone">Numéro de téléphone *</Label>
+                  <Input
+                    id="phone"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="+221 77 876 20 82"
+                  />
+                  <p className="text-sm text-gray-600 mt-1">
+                    Vous recevrez un SMS pour confirmer le paiement {paymentMethod.toUpperCase()}
+                  </p>
+                </div>
+              )}
+
+              {paymentMethod === 'cash_on_delivery' && (
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <div className="flex items-center space-x-2 text-green-800">
+                    <Truck size={20} />
+                    <span className="font-medium">Paiement à la livraison</span>
+                  </div>
+                  <p className="text-sm text-green-700 mt-2">
+                    Vous paierez en espèces lors de la réception de votre commande. 
+                    Assurez-vous d'avoir le montant exact : <strong>{formatPrice(total)}</strong>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -207,7 +255,12 @@ const Checkout = ({ isOpen, onClose, items, onOrderComplete }: CheckoutProps) =>
               ) : (
                 <div className="flex items-center space-x-2">
                   <CheckCircle size={20} />
-                  <span>Confirmer la commande - {formatPrice(total)}</span>
+                  <span>
+                    {paymentMethod === 'cash_on_delivery' 
+                      ? `Commander - ${formatPrice(total)}` 
+                      : `Confirmer la commande - ${formatPrice(total)}`
+                    }
+                  </span>
                 </div>
               )}
             </Button>
