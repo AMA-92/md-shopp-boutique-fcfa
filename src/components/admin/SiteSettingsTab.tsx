@@ -183,7 +183,7 @@ const SiteSettingsTab = ({ settings, onSettingsChange }: SiteSettingsTabProps) =
               <Input
                 value={localSettings.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="contact@mdshopp.cm"
+                placeholder="mdshop@gmail.com"
               />
             </div>
 
@@ -192,7 +192,7 @@ const SiteSettingsTab = ({ settings, onSettingsChange }: SiteSettingsTabProps) =
               <Input
                 value={localSettings.address}
                 onChange={(e) => handleInputChange('address', e.target.value)}
-                placeholder="Douala, Cameroun"
+                placeholder="Dakar, Sénégal"
               />
             </div>
           </div>

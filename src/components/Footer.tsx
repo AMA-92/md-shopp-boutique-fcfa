@@ -19,7 +19,7 @@ const Footer = () => {
             </div>
             <p className="text-gray-300 leading-relaxed">
               Votre boutique en ligne de confiance pour tous vos besoins. 
-              Qualité garantie et livraison rapide partout au Cameroun.
+              Qualité garantie et livraison rapide partout au Sénégal.
             </p>
             <div className="flex space-x-3">
               <a href="#" className="bg-gradient-to-r from-blue-500 to-blue-600 p-3 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
@@ -84,13 +84,13 @@ const Footer = () => {
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2 rounded-lg">
                   <Mail size={16} />
                 </div>
-                <span>contact@mdshopp.cm</span>
+                <span>mdshop@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                 <div className="bg-gradient-to-r from-red-500 to-red-600 p-2 rounded-lg">
                   <MapPin size={16} />
                 </div>
-                <span>Douala, Cameroun</span>
+                <span>Dakar, Sénégal</span>
               </div>
             </div>
           </div>

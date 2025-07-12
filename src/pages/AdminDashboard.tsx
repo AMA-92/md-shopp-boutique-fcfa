@@ -61,8 +61,8 @@ const AdminDashboard = () => {
     logo: '',
     siteName: 'MD shopp',
     phone: '+221 77 876 20 82',
-    email: 'contact@mdshopp.cm',
-    address: 'Douala, Cameroun',
+    email: 'mdshop@gmail.com',
+    address: 'Dakar, Sénégal',
     quickLinks: ['Accueil', 'Produits', 'À propos', 'Contact', 'FAQ'],
     categories: initialCategories.slice(1), // Exclure "Tous"
     socialMedia: {
