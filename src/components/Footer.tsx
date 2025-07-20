@@ -13,9 +13,9 @@ const Footer = () => {
               <div className="bg-gradient-to-r from-purple-500 to-pink-500 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">
                 MD
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-                shopp
-              </span>
+               <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                 Que de Bonnes Choses
+               </span>
             </div>
             <p className="text-gray-300 leading-relaxed">
               Votre boutique en ligne de confiance pour tous vos besoins. 
@@ -78,7 +78,10 @@ const Footer = () => {
                 <div className="bg-gradient-to-r from-green-500 to-green-600 p-2 rounded-lg">
                   <Phone size={16} />
                 </div>
-                <span>+221 77 876 20 82</span>
+                <div className="space-y-1">
+                  <div>77 253 67 57</div>
+                  <div>70 898 55 45</div>
+                </div>
               </div>
               <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300">
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2 rounded-lg">

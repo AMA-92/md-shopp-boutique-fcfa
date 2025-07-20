@@ -59,8 +59,8 @@ const AdminDashboard = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [siteSettings, setSiteSettings] = useState<SiteSettings>({
     logo: '',
-    siteName: 'MD shopp',
-    phone: '+221 77 876 20 82',
+    siteName: 'Que de Bonnes Choses',
+    phone: '77 253 67 57',
     email: 'mdshop@gmail.com',
     address: 'Dakar, Sénégal',
     quickLinks: ['Accueil', 'Produits', 'À propos', 'Contact', 'FAQ'],
