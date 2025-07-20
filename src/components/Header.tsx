@@ -19,11 +19,14 @@ const Header = ({ cartItemsCount, onToggleCart }: HeaderProps) => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1 hover:text-purple-200 transition-colors">
               <Phone size={14} />
-              <span>+221 77 876 20 82</span>
+              <div className="space-x-2">
+                <span>77 253 67 57</span>
+                <span>70 898 55 45</span>
+              </div>
             </div>
             <div className="flex items-center space-x-1 hover:text-purple-200 transition-colors">
               <Mail size={14} />
-              <span>contact@mdshopp.cm</span>
+              <span>mdshop@gmail.com</span>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
@@ -50,7 +53,7 @@ const Header = ({ cartItemsCount, onToggleCart }: HeaderProps) => {
               MD
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              shopp
+              Que de Bonnes Choses
             </span>
           </Link>
 
