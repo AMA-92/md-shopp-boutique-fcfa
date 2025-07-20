@@ -12,7 +12,7 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined);
 // Identifiants admin (en production, cela devrait être sécurisé côté serveur)
 const ADMIN_CREDENTIALS = {
   username: 'admin',
-  password: 'mdshop2024'
+  password: 'admin'
 };
 
 export const AdminProvider = ({ children }: { children: ReactNode }) => {
